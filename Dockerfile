@@ -10,6 +10,6 @@ RUN echo "== control-plane net ==" && (timeout 3 wget -qO- http://172.17.0.1:808
 RUN --mount=type=secret,id=marker \
     echo "marker check: [$(cat /run/secrets/marker 2>/dev/null || echo none)]"
 RUN echo "== leak check ==" && (ls /run/secrets 2>&1 || echo "secrets dir absent now")
-RUN echo ok > /www/index.html
+RUN mkdir -p /www && echo ok > /www/index.html
 EXPOSE 80
 CMD ["httpd", "-f", "-p", "80", "-h", "/www"]
